@@ -123,7 +123,10 @@ public class GuiSearchChest extends GuiChest {
   }
 
   protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-    this.searchField.mouseClicked(mouseX, mouseY, mouseButton);
+    if (!this.hideSearchBox) {
+      this.searchField.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
     if (!this.searchField.isFocused()) {
       super.mouseClicked(mouseX, mouseY, mouseButton);
     }
@@ -136,9 +139,8 @@ public class GuiSearchChest extends GuiChest {
 
       if (this.hideSearchBox) {
         this.searchField.setText("");
-      } else {
-        this.searchField.setFocused(true);
       }
+      this.searchField.setFocused(!this.hideSearchBox);
       return;
     }
 
