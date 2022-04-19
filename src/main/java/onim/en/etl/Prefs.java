@@ -1,13 +1,13 @@
 package onim.en.etl;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
-import com.google.gson.Gson;
 
 public class Prefs {
 
@@ -76,4 +76,6 @@ public class Prefs {
   public boolean debugMode = true;
 
   public boolean smartHealthBar = true;
+
+  public boolean improveChestBackgroundRender = true;
 }

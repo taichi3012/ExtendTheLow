@@ -1,10 +1,5 @@
 package onim.en.etl.util;
 
-import java.lang.reflect.Field;
-import java.util.Set;
-
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
@@ -21,12 +16,12 @@ import onim.en.etl.extension.ExtensionManager;
 import onim.en.etl.extension.TheLowExtension;
 import onim.en.etl.ui.GuiExtendTheLow;
 import onim.en.etl.ui.RenderingContext;
-import onim.en.etl.ui.components.ActionButton;
-import onim.en.etl.ui.components.Button;
-import onim.en.etl.ui.components.EnumSwitchButton;
-import onim.en.etl.ui.components.Slider;
-import onim.en.etl.ui.components.ToggleButton;
+import onim.en.etl.ui.components.*;
 import onim.en.etl.ui.custom.QuickActionSetting;
+import org.lwjgl.opengl.GL11;
+
+import java.lang.reflect.Field;
+import java.util.Set;
 
 public class GuiUtil {
 
@@ -227,6 +222,9 @@ public class GuiUtil {
       }));
       buttonList.add(new ToggleButton("onim.en.etl.smartHealthBar", Prefs.get().smartHealthBar, b -> {
         Prefs.get().smartHealthBar = b;
+      }));
+      buttonList.add(new ToggleButton("onim.en.etl.improveChestBackgroundRender", Prefs.get().improveChestBackgroundRender, b -> {
+        Prefs.get().improveChestBackgroundRender = b;
       }));
       buttonList.add(getClearCacheButton());
       buttonList.add(getResetSettingsButton());
