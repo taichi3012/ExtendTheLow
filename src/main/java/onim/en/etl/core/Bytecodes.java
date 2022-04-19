@@ -2,8 +2,11 @@ package onim.en.etl.core;
 
 import java.util.function.Function;
 
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.VarInsnNode;
 
 public class Bytecodes {
 
@@ -31,6 +34,16 @@ public class Bytecodes {
     }
 
     return false;
+  }
+
+  public static InsnList stackField(String owner, String fieldName, String desc) {
+    InsnList list = new InsnList();
+
+    list.add(new VarInsnNode(Opcodes.ALOAD, 0));
+    list.add(new FieldInsnNode(Opcodes.GETFIELD, owner, fieldName,
+            desc));
+
+    return list;
   }
 
 }
