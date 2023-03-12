@@ -13,7 +13,7 @@ public class RenderCharAtPos extends HookInjector {
   public RenderCharAtPos() {
     super("net.minecraft.client.gui.FontRenderer");
 
-    this.registerEntry(ObfuscateType.NONE, "func_181559_a", "(CZ)F");
+    this.registerEntry(ObfuscateType.NONE, "renderChar", "(CZ)F");
     this.registerEntry(ObfuscateType.OBF, "a", "(CZ)F");
   }
 

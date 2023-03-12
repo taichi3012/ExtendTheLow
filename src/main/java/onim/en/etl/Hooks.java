@@ -28,22 +28,22 @@ public class Hooks {
 
   public static boolean onHandleTeams(S3EPacketTeams packetIn, Scoreboard scoreboard) {
     ScorePlayerTeam scoreplayerteam;
-    if (packetIn.func_149307_h() == 0) {
-      scoreplayerteam = scoreboard.createTeam(packetIn.func_149312_c());
+    if (packetIn.getAction() == 0) {
+      scoreplayerteam = scoreboard.createTeam(packetIn.getName());
     } else {
-      scoreplayerteam = scoreboard.getTeam(packetIn.func_149312_c());
+      scoreplayerteam = scoreboard.getTeam(packetIn.getName());
     }
 
-    if (packetIn.func_149307_h() == 0 || packetIn.func_149307_h() == 2) {
+    if (packetIn.getAction() == 0 || packetIn.getAction() == 2) {
 
       if (scoreplayerteam != null) {
 
-        scoreplayerteam.setTeamName(packetIn.func_149306_d());
-        scoreplayerteam.setNamePrefix(packetIn.func_149311_e());
-        scoreplayerteam.setNameSuffix(packetIn.func_149309_f());
-        scoreplayerteam.setChatFormat(EnumChatFormatting.func_175744_a(packetIn.func_179813_h()));
-        scoreplayerteam.func_98298_a(packetIn.func_149308_i());
-        Team.EnumVisible team$enumvisible = Team.EnumVisible.func_178824_a(packetIn.func_179814_i());
+        scoreplayerteam.setTeamName(packetIn.getDisplayName());
+        scoreplayerteam.setNamePrefix(packetIn.getPrefix());
+        scoreplayerteam.setNameSuffix(packetIn.getSuffix());
+        scoreplayerteam.setChatFormat(EnumChatFormatting.func_175744_a(packetIn.getColor()));
+        scoreplayerteam.func_98298_a(packetIn.getFriendlyFlags());
+        Team.EnumVisible team$enumvisible = Team.EnumVisible.func_178824_a(packetIn.getNameTagVisibility());
 
         if (team$enumvisible != null) {
           scoreplayerteam.setNameTagVisibility(team$enumvisible);
@@ -51,19 +51,19 @@ public class Hooks {
       }
     }
 
-    if (packetIn.func_149307_h() == 0 || packetIn.func_149307_h() == 3) {
-      for (String s : packetIn.func_149310_g()) {
-        scoreboard.addPlayerToTeam(s, packetIn.func_149312_c());
+    if (packetIn.getAction() == 0 || packetIn.getAction() == 3) {
+      for (String s : packetIn.getPlayers()) {
+        scoreboard.addPlayerToTeam(s, packetIn.getName());
       }
     }
 
-    if (packetIn.func_149307_h() == 4) {
-      for (String s1 : packetIn.func_149310_g()) {
+    if (packetIn.getAction() == 4) {
+      for (String s1 : packetIn.getPlayers()) {
         scoreboard.removePlayerFromTeam(s1, scoreplayerteam);
       }
     }
 
-    if (packetIn.func_149307_h() == 1) {
+    if (packetIn.getAction() == 1) {
       if (scoreplayerteam != null) {
         scoreboard.removeTeam(scoreplayerteam);
       }

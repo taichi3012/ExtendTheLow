@@ -52,17 +52,17 @@ public class AdvancedIngameGUI extends GuiIngameForge {
   protected void renderTitle(int width, int height, float partialTicks) {
     AdvancedFontRenderer.bigMode = true;
 
-    if (field_175195_w > 0) {
+    if (titlesTimer > 0) {
       mc.mcProfiler.startSection("titleAndSubtitle");
-      float age = (float) this.field_175195_w - partialTicks;
+      float age = (float) this.titlesTimer - partialTicks;
       int opacity = 255;
 
-      if (field_175195_w > field_175193_B + field_175192_A) {
-        float f3 = (float) (field_175199_z + field_175192_A + field_175193_B) - age;
-        opacity = (int) (f3 * 255.0F / (float) field_175199_z);
+      if (titlesTimer > titleFadeOut + titleDisplayTime) {
+        float f3 = (float) (titleFadeIn + titleDisplayTime + titleFadeOut) - age;
+        opacity = (int) (f3 * 255.0F / (float) titleFadeIn);
       }
-      if (field_175195_w <= field_175193_B)
-        opacity = (int) (age * 255.0F / (float) this.field_175193_B);
+      if (titlesTimer <= titleFadeOut)
+        opacity = (int) (age * 255.0F / (float) this.titleFadeOut);
 
       opacity = MathHelper.clamp_int(opacity, 0, 255);
 
@@ -75,15 +75,15 @@ public class AdvancedIngameGUI extends GuiIngameForge {
         GlStateManager.scale(4.0F, 4.0F, 4.0F);
 
         int l = opacity << 24 & -16777216;
-        float textWidth = this.getFontRenderer().getStringWidth(field_175201_x);
-        this.getFontRenderer().drawString(this.field_175201_x, -textWidth / 2F + 2.5F, -10, 16777215 | l, true);
+        float textWidth = this.getFontRenderer().getStringWidth(displayedTitle);
+        this.getFontRenderer().drawString(this.displayedTitle, -textWidth / 2F + 2.5F, -10, 16777215 | l, true);
         GlStateManager.popMatrix();
 
         GlStateManager.pushMatrix();
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
-        textWidth = this.getFontRenderer().getStringWidth(field_175200_y);
+        textWidth = this.getFontRenderer().getStringWidth(displayedSubTitle);
 
-        this.getFontRenderer().drawString(this.field_175200_y, -textWidth / 2F + 2.5F, 5.0F, 16777215 | l, true);
+        this.getFontRenderer().drawString(this.displayedSubTitle, -textWidth / 2F + 2.5F, 5.0F, 16777215 | l, true);
         GlStateManager.popMatrix();
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
