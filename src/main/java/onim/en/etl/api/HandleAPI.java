@@ -137,7 +137,8 @@ public class HandleAPI {
       case "skill_cooltime":
         type = new TypeToken<ApiResponse<SkillCooltimeResponse>>() {}.getType();
         ApiResponse<SkillCooltimeResponse> skillCooltime = gson.fromJson(json, type);
-        MinecraftForge.EVENT_BUS.post(new SkillEnterCooltimeEvent(skillCooltime.response));
+        SkillEnterCooltimeEvent event = new SkillEnterCooltimeEvent(skillCooltime.response);
+        TickTaskExecutor.addTask(() -> MinecraftForge.EVENT_BUS.post(event));
       default:
     }
   }

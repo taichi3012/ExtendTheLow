@@ -23,7 +23,7 @@ import onim.en.etl.util.JavaUtil;
 public class DataStorage {
 
   private static PlayerStatusProvider playerStatusProvider = new PlayerStatusProvider();
-  private static HashSet<DungeonInfo> dungeons = Sets.newHashSet();
+  private static Set<DungeonInfo> dungeons = Sets.newConcurrentHashSet();
 
   private static String currentWorldName = "";
 
@@ -80,7 +80,8 @@ public class DataStorage {
 
     if (Files.exists(dungeonsPath)) {
       try (BufferedReader reader = Files.newBufferedReader(dungeonsPath)) {
-        dungeons = gson.fromJson(reader, new TypeToken<HashSet<DungeonInfo>>() {}.getType());
+        Set<DungeonInfo> set = gson.fromJson(reader, new TypeToken<HashSet<DungeonInfo>>() {}.getType());
+        dungeons = Sets.newConcurrentHashSet(set);
       } catch (Exception e) {
         deleteDungeonDataCaches();
         e.printStackTrace();

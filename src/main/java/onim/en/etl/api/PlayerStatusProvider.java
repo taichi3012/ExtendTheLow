@@ -1,16 +1,14 @@
 package onim.en.etl.api;
 
-import java.util.HashMap;
 import java.util.UUID;
-
-import com.google.common.collect.Maps;
+import java.util.concurrent.ConcurrentHashMap;
 
 import onim.en.etl.api.dto.PlayerStatus;
 
 public class PlayerStatusProvider {
 
-  private HashMap<String, PlayerStatus> nameToStatus = Maps.newHashMap();
-  private HashMap<UUID, PlayerStatus> idToStatus = Maps.newHashMap();
+  private ConcurrentHashMap<String, PlayerStatus> nameToStatus = new ConcurrentHashMap<>();
+  private ConcurrentHashMap<UUID, PlayerStatus> idToStatus = new ConcurrentHashMap<>();
 
   public void setStatus(PlayerStatus status) {
     if (status == null) {
