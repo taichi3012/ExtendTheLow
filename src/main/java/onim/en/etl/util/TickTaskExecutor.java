@@ -1,34 +1,34 @@
 package onim.en.etl.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.collect.Maps;
 
 public class TickTaskExecutor {
 
-  private static int taskIdCounter = 0;
+  private static AtomicInteger taskIdCounter = new AtomicInteger();
 
   private static HashMap<Integer, TickTask> scheduledTasks = Maps.newHashMap();
 
-  private static List<TickTask> syncTaskPool = new ArrayList<>();
+  private static List<TickTask> syncTaskPool = Collections.synchronizedList(new ArrayList<>());
 
   public static void addTask(Runnable task) {
     executeLater(task, 0);
   }
 
   public static TickTask scheduleTask(Runnable run, long delay, long interval) {
-    TickTask task = new TickTask(taskIdCounter, delay, interval, run);
+    TickTask task = new TickTask(taskIdCounter.getAndIncrement(), delay, interval, run);
     syncTaskPool.add(task);
-    taskIdCounter++;
     return task;
   }
 
   public static TickTask executeLater(Runnable run, long delay) {
-    TickTask task = new TickTask(taskIdCounter, delay, run);
+    TickTask task = new TickTask(taskIdCounter.getAndIncrement(), delay, run);
     syncTaskPool.add(task);
-    taskIdCounter++;
     return task;
   }
 
