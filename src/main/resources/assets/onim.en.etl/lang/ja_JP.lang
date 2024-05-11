@@ -52,6 +52,7 @@ onim.en.etl.quickAction=クイックアクション
 onim.en.etl.quickAction.toggleDungeonMarker=ダンジョンマーカー%nON/OFF
 onim.en.etl.quickAction.openSettingsGUI=設定を開く
 onim.en.etl.quickAction.requestApiDatas=データを更新%n(プレイヤー情報,etc..)
+onim.en.etl.quickAction.toggleNoThrowMarker=NoThrowマーカー%nON/OFF
 onim.en.etl.quickAction.commandQuest=クエストを開く
 onim.en.etl.quickAction.commandNoThrow=/NoThrowを実行
 onim.en.etl.quickAction.commandStats=自分の情報を見る

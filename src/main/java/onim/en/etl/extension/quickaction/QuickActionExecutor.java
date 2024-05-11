@@ -19,7 +19,8 @@ public class QuickActionExecutor {
     quickActions.put("onim.en.etl.quickAction.toggleDungeonMarker", QuickActionExecutor::toggleDungoneMarker);
     quickActions.put("onim.en.etl.quickAction.openSettingsGUI", QuickActionExecutor::openSettingsGUI);
     quickActions.put("onim.en.etl.quickAction.requestApiDatas", QuickActionExecutor::requestApiDatas);
-    quickActions.put("onim.en.etl.quickAction.commandQuest", QuickActionExecutor::openQuestGUI);
+    quickActions.put("onim.en.etl.quickAction.toggleNoThrowMarker", QuickActionExecutor::toggleNoThrowMarker);
+    // quickActions.put("onim.en.etl.quickAction.commandQuest", QuickActionExecutor::openQuestGUI);
     quickActions.put("onim.en.etl.quickAction.commandNoThrow", QuickActionExecutor::executeNoThrow);
     quickActions.put("onim.en.etl.quickAction.commandStats", QuickActionExecutor::executeStatsCommand);
     // quickActions.put("onim.en.etl.quickAction.customCommand", new CustomCommandAction(""));
@@ -51,6 +52,16 @@ public class QuickActionExecutor {
 
   public static void executeStatsCommand() {
     ExtendTheLow.executeCommand("/stats");
+  }
+
+  public static void toggleNoThrowMarker() {
+    TheLowExtension extension = ExtensionManager.getExtension("onim.en.etl.noThrowMarker");
+
+    if (extension.isEnabled()) {
+      ExtensionManager.disableExtension(extension);
+    } else {
+      ExtensionManager.enableExtension(extension);
+    }
   }
 
   public static void openQuestGUI() {

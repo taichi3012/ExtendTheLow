@@ -52,6 +52,7 @@ onim.en.etl.quickAction=Quick Action
 onim.en.etl.quickAction.toggleDungeonMarker=Dungeon Marker%nON/OFF
 onim.en.etl.quickAction.openSettingsGUI=Open Settings
 onim.en.etl.quickAction.requestApiDatas=Fetch Latest%n(TheLowPlayer Infos)
+onim.en.etl.quickAction.toggleNoThrowMarker=NoThrow Marker%nON/OFF
 onim.en.etl.quickAction.commandQuest=Open Quest GUI
 onim.en.etl.quickAction.commandNoThrow=Execute /NoThrow
 onim.en.etl.quickAction.commandStats=View my stats
