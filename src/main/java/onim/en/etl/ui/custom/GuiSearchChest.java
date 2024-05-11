@@ -19,7 +19,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import onim.en.etl.ExtendTheLow;
-import onim.en.etl.util.MinecraftUtil;
 
 public class GuiSearchChest extends GuiChest {
 
@@ -29,7 +28,7 @@ public class GuiSearchChest extends GuiChest {
 
   private boolean hideSearchBox = true;
 
-  private List<Slot> searchResult = null;
+  private List<Slot> searchResult;
 
   private boolean initialized = false;
 
@@ -44,7 +43,7 @@ public class GuiSearchChest extends GuiChest {
 
     this.searchField = new GuiTextField(5505, ExtendTheLow.AdvancedFont, this.width / 2 - 75, this.height / 2
         - 6, 150, 12);
-
+    this.searchField.setText(searchString);
   }
 
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -64,6 +63,10 @@ public class GuiSearchChest extends GuiChest {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+
+    if (this.hideSearchBox) {
+      return;
+    }
 
     for (Slot slot : searchResult) {
       GlStateManager.disableLighting();
@@ -108,7 +111,7 @@ public class GuiSearchChest extends GuiChest {
   public void drawDefaultBackground() {
     super.drawDefaultBackground();
 
-    if (Strings.isNullOrEmpty(searchString)) {
+    if (this.hideSearchBox || Strings.isNullOrEmpty(searchString)) {
       String text = I18n.format("onim.en.etl.chestSearchBox.help1");
       ExtendTheLow.AdvancedFont.drawString(text, 4, 4, 0xFFFFFF);
     } else {
@@ -126,7 +129,6 @@ public class GuiSearchChest extends GuiChest {
     if (!this.hideSearchBox) {
       this.searchField.mouseClicked(mouseX, mouseY, mouseButton);
     }
-
     if (!this.searchField.isFocused()) {
       super.mouseClicked(mouseX, mouseY, mouseButton);
     }
@@ -136,11 +138,10 @@ public class GuiSearchChest extends GuiChest {
   protected void keyTyped(char typedChar, int keyCode) throws IOException {
     if (typedChar == '\n' || typedChar == '\r') {
       this.hideSearchBox = !this.hideSearchBox;
-
-      if (this.hideSearchBox) {
-        this.searchField.setText("");
-      }
       this.searchField.setFocused(!this.hideSearchBox);
+      if (!this.hideSearchBox) {
+        this.updateSearchResult();
+      }
       return;
     }
 
@@ -154,10 +155,7 @@ public class GuiSearchChest extends GuiChest {
 
   private void updateSearchResult() {
     this.searchResult.clear();
-
-    for (int i = 0; i < this.inventorySlots.inventorySlots.size(); i++) {
-      Slot slot = (Slot) this.inventorySlots.inventorySlots.get(i);
-
+    for (Slot slot : this.inventorySlots.inventorySlots) {
       ItemStack stack = slot.getStack();
 
       if (this.hasRelation(stack, searchString)) {
@@ -173,15 +171,14 @@ public class GuiSearchChest extends GuiChest {
       return false;
     }
 
-    String name = I18n.format(stack.getDisplayName()).toLowerCase();
+    List<String> lore = stack.getTooltip(this.mc.thePlayer, this.mc.gameSettings.advancedItemTooltips);
 
-    if (name.contains(text.toLowerCase())) {
-      return true;
-    }
-
-    List<String> lore = MinecraftUtil.getLore(stack);
-
-    return lore.stream().anyMatch(s -> s.toLowerCase().contains(text.toLowerCase()));
+    return lore.stream().anyMatch(s ->
+            s.replaceAll("§{2,}", "§")   //2文字以上連続する"§"を一文字の"§"に置換
+                    .replaceAll("§.", "")//カラーコードを削除
+                    .toLowerCase()
+                    .contains(text.toLowerCase())
+    );
   }
 
 }
