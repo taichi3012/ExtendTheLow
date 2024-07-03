@@ -73,7 +73,8 @@ onim.en.etl.photo.worldTime=ワールド時間(クライアントサイド)
 
 onim.en.etl.chestSearchBox=チェスト内検索
 onim.en.etl.chestSearchBox.help1=エンターで検索ボックスを開く
-onim.en.etl.chestSearchBox.help2=%sで検索 
+onim.en.etl.chestSearchBox.help2=%sで検索
+onim.en.etl.chestSearchBox.improveBackgroundRender=背景の描画を改善
 
 onim.en.etl.generalSettings=一般設定
 onim.en.etl.advancedFont=高解像度フォント

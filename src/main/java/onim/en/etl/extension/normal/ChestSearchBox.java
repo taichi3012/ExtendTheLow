@@ -5,11 +5,15 @@ import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import onim.en.etl.annotation.PrefItem;
 import onim.en.etl.extension.TheLowExtension;
 import onim.en.etl.ui.custom.GuiSearchChest;
 import onim.en.etl.util.MinecraftUtil;
 
 public class ChestSearchBox extends TheLowExtension {
+
+  @PrefItem(id = "onim.en.etl.chestSearchBox.improveBackgroundRender", type = boolean.class)
+  public boolean improveBackgroundRender = true;
 
   @Override
   public String id() {
@@ -41,7 +45,7 @@ public class ChestSearchBox extends TheLowExtension {
     }
 
     Minecraft mc = Minecraft.getMinecraft();
-    GuiSearchChest chest = new GuiSearchChest(mc.thePlayer.inventory, inv);
+    GuiSearchChest chest = new GuiSearchChest(mc.thePlayer.inventory, inv, this.improveBackgroundRender);
 
     event.gui = chest;
   }

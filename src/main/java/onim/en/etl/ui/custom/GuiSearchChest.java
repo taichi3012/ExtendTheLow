@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.google.common.base.Strings;
@@ -22,7 +23,13 @@ import onim.en.etl.ExtendTheLow;
 
 public class GuiSearchChest extends GuiChest {
 
+  private static final ResourceLocation CHEST_GUI_TEXTURE = new ResourceLocation("textures/gui/container/generic_54.png");
+
   private static String searchString = "";
+
+  private final boolean improveBackgroundRender;
+
+  private final int inventoryRows;
 
   private GuiTextField searchField;
 
@@ -32,8 +39,10 @@ public class GuiSearchChest extends GuiChest {
 
   private boolean initialized = false;
 
-  public GuiSearchChest(IInventory playerInv, IInventory chestInv) {
+  public GuiSearchChest(IInventory playerInv, IInventory chestInv, boolean improveBackgroundRender) {
     super(playerInv, chestInv);
+    this.improveBackgroundRender = improveBackgroundRender;
+    this.inventoryRows = chestInv.getSizeInventory() / 9;
 
     this.searchResult = new LinkedList<>();
   }
@@ -57,6 +66,25 @@ public class GuiSearchChest extends GuiChest {
       GlStateManager.disableDepth();
       this.searchField.drawTextBox();
       GlStateManager.enableDepth();
+    }
+  }
+
+  @Override
+  protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+    if (this.improveBackgroundRender) {
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+      this.mc.getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
+      int i = (this.width - this.xSize) / 2;
+      int j = (this.height - this.ySize) / 2;
+      this.drawTexturedModalRect(i, j, 0, 0, this.xSize, 17);
+
+      for (int y = 0; y < this.inventoryRows; y++) {
+        this.drawTexturedModalRect(i, 17 + j + (18 * y), 0, 17, this.xSize, 18);
+      }
+
+      this.drawTexturedModalRect(i, j + this.inventoryRows * 18 + 17, 0, 126, this.xSize, 96);
+    } else {
+      super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
     }
   }
 

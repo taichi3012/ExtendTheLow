@@ -74,6 +74,7 @@ onim.en.etl.photo.worldTime=World Time (client-side)
 onim.en.etl.chestSearchBox=Search in chest
 onim.en.etl.chestSearchBox.help1=Type enter to open search box.
 onim.en.etl.chestSearchBox.help2=Search word: %s
+onim.en.etl.improveFreeMarket.improveBackgroundRender=Improve render background
 
 onim.en.etl.generalSettings=General Settings
 onim.en.etl.advancedFont=Better Font
