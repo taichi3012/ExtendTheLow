@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import com.google.common.base.Strings;
@@ -50,9 +51,15 @@ public class GuiSearchChest extends GuiChest {
   public void initGui() {
     super.initGui();
 
+    Keyboard.enableRepeatEvents(true);
     this.searchField = new GuiTextField(5505, ExtendTheLow.AdvancedFont, this.width / 2 - 75, this.height / 2
         - 6, 150, 12);
     this.searchField.setText(searchString);
+  }
+
+  @Override
+  public void onGuiClosed() {
+    Keyboard.enableRepeatEvents(false);
   }
 
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -67,6 +74,12 @@ public class GuiSearchChest extends GuiChest {
       this.searchField.drawTextBox();
       GlStateManager.enableDepth();
     }
+  }
+
+  @Override
+  public void updateScreen() {
+    super.updateScreen();
+    this.searchField.updateCursorCounter();
   }
 
   @Override
