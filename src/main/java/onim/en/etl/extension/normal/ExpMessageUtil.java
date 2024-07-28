@@ -50,6 +50,12 @@ public class ExpMessageUtil extends TheLowExtension {
   @SubscribeEvent
   public void onClientChatReceived(ClientChatReceivedEvent event) {
     String text = event.message.getFormattedText();
+
+    //APIレスポンスだった場合は無視
+    if (text.startsWith("§r$api")) {
+      return;
+    }
+
     Matcher matcher = ExpMessage.matcher(text);
     if (!matcher.matches()) {
       previousExpMessage = null;
