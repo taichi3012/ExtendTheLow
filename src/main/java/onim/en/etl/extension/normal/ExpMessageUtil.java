@@ -22,7 +22,7 @@ public class ExpMessageUtil extends TheLowExtension {
   public ExpMessageProcessing processingType = ExpMessageProcessing.NORMAL;
 
   private static final Pattern ExpMessage =
-      Pattern.compile("§r§b(?<type>魔法|剣|弓|メイン)レベル \\+ (?<amount>[0-9]+) exp§r");
+      Pattern.compile("§r§b(?<type>魔法|剣|弓)レベル \\+ (?<amount>[0-9]+) exp§r");
 
   private ExpMessageData previousExpMessage = null;
   private int messageID = 0;
@@ -82,21 +82,14 @@ public class ExpMessageUtil extends TheLowExtension {
 
   private void stackMessage(ExpMessageData msgData, ClientChatReceivedEvent event) {
     event.setCanceled(true);
-    GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
 
-    if (previousExpMessage == null
-        || (previousExpMessage != null && !previousExpMessage.isSameType(msgData))) {
-      previousExpMessage = msgData;
-      this.printMessage(msgData.toChatComponent());
-      return;
-    }
-
-    if (previousExpMessage.isSameType(msgData)) {
-      chat.deleteChatLine(messageID);
+    if (previousExpMessage != null && previousExpMessage.isSameType(msgData)) {
+      Minecraft.getMinecraft().ingameGUI.getChatGUI()
+          .deleteChatLine(messageID);
       msgData.add(previousExpMessage);
-      this.printMessage(msgData.toChatComponent());
     }
 
+    this.printMessage(msgData.toChatComponent());
     previousExpMessage = msgData;
   }
 
