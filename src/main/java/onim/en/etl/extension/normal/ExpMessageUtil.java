@@ -94,7 +94,7 @@ public class ExpMessageUtil extends TheLowExtension {
   }
 
   private void printMessage(IChatComponent chat) {
-    messageID = (int) (this.hashCode() + System.currentTimeMillis());
+    messageID = (int) (this.hashCode() + System.nanoTime());
     Minecraft.getMinecraft().ingameGUI.getChatGUI()
         .printChatMessageWithOptionalDeletion(chat, messageID);
   }
