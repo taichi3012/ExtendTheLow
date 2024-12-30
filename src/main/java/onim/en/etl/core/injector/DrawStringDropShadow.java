@@ -13,17 +13,17 @@ public class DrawStringDropShadow extends HookInjector {
   public DrawStringDropShadow() {
     super("net.minecraft.client.gui.FontRenderer");
     this.registerEntry(ObfuscateType.NONE, "drawString", "(Ljava/lang/String;FFIZ)I");
+    this.registerEntry(ObfuscateType.SRG, "func_175065_a", "(Ljava/lang/String;FFIZ)I");
+    this.registerEntry(ObfuscateType.OBF, "a", "(Ljava/lang/String;FFIZ)I");
   }
 
   @Override
   public boolean injectHook(InsnList list, ObfuscateType type) {
     MethodInsnNode hook = new MethodInsnNode(Opcodes.INVOKESTATIC, "onim/en/etl/Hooks", "getShadowOffset", "(F)F", false);
-    Bytecodes.injectAfterSequence(list, new int[] {Opcodes.FCONST_1}, (loc) -> {
+    return Bytecodes.injectAfterSequence(list, new int[] {Opcodes.FCONST_1}, (loc) -> {
       list.insert(loc, hook);
       return true;
     });
-
-    return false;
   }
 
 }

@@ -4,7 +4,6 @@ import java.util.Set;
 
 import com.google.common.collect.HashMultimap;
 
-import onim.en.etl.core.injector.DrawStringDropShadow;
 import onim.en.etl.core.injector.GetCharWidthFloatHook;
 import onim.en.etl.core.injector.HookBroadcastSound;
 import onim.en.etl.core.injector.HookRenderItem;
@@ -33,7 +32,7 @@ public class HookInjectorRegistry {
 //    registerInjector(new PreventRenderBold());
     registerInjector(new RenderCharAtPos());
     registerInjector(new PatchScoreNullError());
-    registerInjector(new DrawStringDropShadow());
+//    registerInjector(new DrawStringDropShadow());
     registerInjector(new HookBroadcastSound());
     registerInjector(new HookRenderItem());
   }
