@@ -131,9 +131,11 @@ public class ExtendTheLow {
     TickTaskExecutor.advanceScheduledTasks();
   }
 
-  @SubscribeEvent
+  @SubscribeEvent(receiveCanceled = true)
   public void onClientChatReceived(ClientChatReceivedEvent event) {
-    event.setCanceled(HandleAPI.processChat(event));
+    if (HandleAPI.processChat(event)) {
+      event.setCanceled(true);
+    }
 
     if (event.message.getFormattedText().startsWith(HandleAPI.PLAYER_DATA_MSG)) {
       HandleAPI.startApiUpdateRoutine();
